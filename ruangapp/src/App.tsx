@@ -1,12 +1,43 @@
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './pages/login';
+import Register from './pages/register';
+import PrivateRoute from './components/privateRoute';
+import BorrowingList from './pages/borrowingList';
+import Dashboard from './pages/dashboard';
+import Layout from './layouts/layout';
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Vite + Tailwind Works 🚀
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/borrowings"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <BorrowingList />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
