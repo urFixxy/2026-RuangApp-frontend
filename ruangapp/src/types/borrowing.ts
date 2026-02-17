@@ -6,16 +6,14 @@ export interface Room {
   isAvailable: boolean;
 }
 
-export type BorrowingStatus = "Pending" | "Approved" | "Rejected";
-
 export interface Borrowing {
   id: number;
   borrowerName: string;
   roomId: number;
+  room?: Room;
   borrowingDate: string;
   startTime: string;
   endTime: string;
   purpose: string;
-  status: BorrowingStatus;
-  room?: Room;
+  status: string;
 }

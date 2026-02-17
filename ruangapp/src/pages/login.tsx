@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { login } from "../services/authService";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +18,8 @@ export default function Login() {
     try {
       const data = await login({ username, password });
 
-      localStorage.setItem("token", data.token);
+      // Simpan token dan user data ke context
+      authLogin(data.token, data.user);
 
       navigate("/");
     } catch (err) {

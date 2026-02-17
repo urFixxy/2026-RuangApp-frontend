@@ -5,8 +5,18 @@ interface LoginRequest {
   password: string;
 }
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  createdAt?: string;
+  isActive?: boolean;
+}
+
 interface LoginResponse {
   token: string;
+  user: User;
 }
 
 interface RegisterRequest {

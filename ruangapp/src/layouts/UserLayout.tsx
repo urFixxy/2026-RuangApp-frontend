@@ -1,15 +1,17 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: Props) {
+export default function UserLayout({ children }: Props) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/login");
   };
 
@@ -32,35 +34,32 @@ export default function Layout({ children }: Props) {
 
   return (
     <div className="flex w-full min-h-screen bg-gray-100">
-
-      {/* Sidebar */}
+      {/* Sidebar User */}
       <div className="w-64 bg-white shadow-lg p-5">
-
         <h1 className="text-xl font-bold text-blue-600 mb-6">
           RuangApp
         </h1>
 
         <nav>
-          {menuItem("/", "Dashboard")}
-          {menuItem("/borrowings", "Borrowings")}
-          {menuItem("/rooms", "Rooms")}
+          {menuItem("/user/dashboard", "Dashboard")}
+          {menuItem("/user/borrowings", "Peminjaman Saya")}
+          {menuItem("/user/findrooms", "Cari Ruangan")}
         </nav>
 
-        <div className="mt-10">
+        <div className="mt-6 pt-5">
           <button
             onClick={handleLogout}
-            className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+            className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 font-semibold"
           >
             Logout
           </button>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 p-6">
-        {children}
+      {/* Main Content */}
+      <div className="flex-1">
+        <div className="p-5">{children}</div>
       </div>
-
     </div>
   );
 }
